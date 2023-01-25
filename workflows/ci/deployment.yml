@@ -55,5 +55,5 @@ jobs:
         shell: bash # Bash explicitly.
         run: |
           if [[ -d ./dev/.files ]]; then
-              npx madrun install:project --mode=ci;
+              npx @clevercanyon/madrun install:project --mode=ci;
           fi;
