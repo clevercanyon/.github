@@ -26,11 +26,11 @@ jobs:
         node-version: [19.2.0, 19.4.0]
 
     runs-on: ${{matrix.os}}
+    environment: ci # Repo CI env.
 
-    permissions: # GitHub token.
+    permissions: # GitHub token permissions.
       contents: read
 
-    environment: ci # Repo CI environment.
     env: # Supplied by action w/ permissions above.
       USER_GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
