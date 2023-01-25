@@ -42,7 +42,7 @@ jobs:
       USER_DOTENV_KEY_CI: ${{secrets.USER_DOTENV_KEY_CI}}
 
     steps:
-        name: Checkout Repo
+      - name: Checkout Repo
         uses: actions/checkout@v3
 
       - name: Check Repo Contents
@@ -53,14 +53,14 @@ jobs:
           fi;
         id: check # For conditionals below.
 
-        name: Setup Node v${{matrix.node-version}}
+      - name: Setup Node v${{matrix.node-version}}
         if: steps.check.outputs.dev_files == 'true'
         uses: actions/setup-node@v3
         with:
           node-version: ${{matrix.node-version}}
           cache: npm # Cache NPM dependencies.
 
-        name: Install Project
+      - name: Install Project
         if: steps.check.outputs.dev_files == 'true'
         shell: bash # Explicitly.
         run: |
