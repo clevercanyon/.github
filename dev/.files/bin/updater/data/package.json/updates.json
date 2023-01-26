@@ -1,0 +1,36 @@
+{
+	"$unset": ["typings", "scripts"],
+	"$set": {
+		"author": {
+			"name": "Clever Canyon",
+			"url": "https://clevercanyon.com"
+		},
+		"funding": "https://github.com/sponsors/clevercanyon",
+
+		"cpu": ["x64", "arm64"],
+		"os": ["darwin", "linux"],
+		"engines": {
+			"node": "^19.2.0 || ^19.4.0",
+			"npm": "^8.19.3 || ^9.2.0"
+		},
+		"workspaces": []
+	},
+	"devDependencies": {
+		"$set": {
+			"@clevercanyon/skeleton-dev-deps": "^1.0.0"
+		}
+	},
+	"config": {
+		"c10n": {
+			"&": {
+				"dotfiles": {},
+				"build": {},
+				"github": {
+					"teams": {},
+					"labels": {}
+				},
+				"npmjs": {}
+			}
+		}
+	}
+}
