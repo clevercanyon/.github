@@ -1,3 +1,3 @@
-# Clever Canyon: Skeleton
+# Clever Canyon: GitHub Config
 
-This is a skeleton for new projects.
+This is a configuration file for Clever Canyon projects on GitHub.
