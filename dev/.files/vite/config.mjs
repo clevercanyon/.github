@@ -12,6 +12,7 @@
 /* eslint-env es2021, node */
 
 import _ from 'lodash';
+import mc from 'merge-change';
 
 import fs from 'node:fs';
 import path from 'node:path';
@@ -22,16 +23,13 @@ import archiver from 'archiver';
 import mm from 'micromatch';
 import { globby } from 'globby';
 
-import mc from 'merge-change';
-import prettier from 'prettier';
-import spawn from 'spawn-please';
-
 import { loadEnv } from 'vite';
 import pluginBasicSSL from '@vitejs/plugin-basic-ssl';
 import { ViteEjsPlugin as pluginEJS } from 'vite-plugin-ejs';
 import { ViteMinifyPlugin as pluginMinifyHTML } from 'vite-plugin-minify';
 
-import importAliases from './includes/aliases.js';
+import u from '../bin/includes/utilities.mjs';
+import importAliases from './includes/aliases.mjs';
 
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
@@ -60,9 +58,7 @@ export default async ({ mode, command /*, ssrBuild */ }) => {
 	/**
 	 * Package-related vars.
 	 */
-	const pkgFile = path.resolve(projDir, './package.json');
-	const pkg = JSON.parse((await fsp.readFile(pkgFile)).toString());
-	const pkgPrettierCfg = { ...(await prettier.resolveConfig(pkgFile)), parser: 'json' };
+	const pkg = await u.pkg(); // Parses current `./package.json` file.
 
 	/**
 	 * Mode-related vars.
@@ -106,6 +102,7 @@ export default async ({ mode, command /*, ssrBuild */ }) => {
 
 	const isWeb = ['web', 'webw'].includes(targetEnv);
 	const isSSR = ['cfp', 'cfw', 'node'].includes(targetEnv);
+	const isSSRNoExternals = isSSR && ['cfp', 'cfw'].includes(targetEnv);
 	const isSSRWorker = isSSR && ['cfw'].includes(targetEnv);
 
 	/**
@@ -128,37 +125,37 @@ export default async ({ mode, command /*, ssrBuild */ }) => {
 	}
 
 	/**
-	 * Prepares `package.json` property updates.
+	 * Prepares `package.json` build-related properties.
 	 */
-	const origPkg = { ...pkg };
+	const pkgProps = {}; // Initialize.
 
-	pkg.type = 'module'; // ES module.
-	pkg.files = ['/dist']; // Dist directory only.
-	pkg.exports = {}; // Exports object initialization.
-	pkg.sideEffects = ['./src/*.{html,scss,css,tsx,ts,jsx,mjs,js}'];
+	pkgProps.type = 'module'; // ES module, always.
+	pkgProps.files = ['/dist']; // Dist directory only.
+	pkgProps.exports = {}; // Exports object initialization.
+	pkgProps.sideEffects = ['./src/*.{html,scss,css,tsx,ts,jsx,mjs,js}'];
 
 	if (isCMA && (isSSR || cmaEntries.length > 1)) {
-		mc.patch(pkg.exports, {
+		pkgProps.exports = {
 			'.': {
 				import: './dist/' + cmaEntryIndexSubpathNoExt + '.js',
 				require: './dist/' + cmaEntryIndexSubpathNoExt + '.cjs',
 				types: './dist/types/' + cmaEntryIndexSubpathNoExt + '.d.ts',
 			},
-		});
-		pkg.module = './dist/' + cmaEntryIndexSubpathNoExt + '.js';
-		pkg.main = './dist/' + cmaEntryIndexSubpathNoExt + '.cjs';
+		};
+		pkgProps.module = './dist/' + cmaEntryIndexSubpathNoExt + '.js';
+		pkgProps.main = './dist/' + cmaEntryIndexSubpathNoExt + '.cjs';
 
-		pkg.browser = isWeb ? pkg.module : '';
-		pkg.unpkg = pkg.module;
+		pkgProps.browser = isWeb ? pkgProps.module : '';
+		pkgProps.unpkg = pkgProps.module;
 
-		pkg.types = './dist/types/' + cmaEntryIndexSubpathNoExt + '.d.ts';
-		pkg.typesVersions = { '>=3.1': { './*': ['./dist/types/*'] } };
+		pkgProps.types = './dist/types/' + cmaEntryIndexSubpathNoExt + '.d.ts';
+		pkgProps.typesVersions = { '>=3.1': { './*': ['./dist/types/*'] } };
 
 		for (const cmaEntrySubPathNoExt of cmaEntriesSubpathsNoExt) {
 			if (cmaEntrySubPathNoExt === cmaEntryIndexSubpathNoExt) {
 				continue; // Don't remap the entry index.
 			}
-			mc.patch(pkg.exports, {
+			mc.patch(pkgProps.exports, {
 				['./' + cmaEntrySubPathNoExt]: {
 					import: './dist/' + cmaEntrySubPathNoExt + '.js',
 					require: './dist/' + cmaEntrySubPathNoExt + '.cjs',
@@ -167,31 +164,31 @@ export default async ({ mode, command /*, ssrBuild */ }) => {
 			});
 		}
 	} else if (isCMA) {
-		mc.patch(pkg.exports, {
+		pkgProps.exports = {
 			'.': {
 				import: './dist/' + cmaEntryIndexSubpathNoExt + '.js',
 				require: './dist/' + cmaEntryIndexSubpathNoExt + '.umd.cjs',
 				types: './dist/types/' + cmaEntryIndexSubpathNoExt + '.d.ts',
 			},
-		});
-		pkg.module = './dist/' + cmaEntryIndexSubpathNoExt + '.js';
-		pkg.main = './dist/' + cmaEntryIndexSubpathNoExt + '.umd.cjs';
+		};
+		pkgProps.module = './dist/' + cmaEntryIndexSubpathNoExt + '.js';
+		pkgProps.main = './dist/' + cmaEntryIndexSubpathNoExt + '.umd.cjs';
 
-		pkg.browser = isWeb ? pkg.main : '';
-		pkg.unpkg = pkg.main;
+		pkgProps.browser = isWeb ? pkgProps.main : '';
+		pkgProps.unpkg = pkgProps.main;
 
-		pkg.types = './dist/types/' + cmaEntryIndexSubpathNoExt + '.d.ts';
-		pkg.typesVersions = { '>=3.1': { './*': ['./dist/types/*'] } };
+		pkgProps.types = './dist/types/' + cmaEntryIndexSubpathNoExt + '.d.ts';
+		pkgProps.typesVersions = { '>=3.1': { './*': ['./dist/types/*'] } };
 	} else {
-		(pkg.type = 'module'), (pkg.module = pkg.main = pkg.browser = pkg.unpkg = pkg.types = '');
-		(pkg.files = []), (pkg.exports = []), (pkg.sideEffects = []), (pkg.typesVersions = {});
+		pkgProps.type = 'module'; // Always a module when building with Vite.
+		pkgProps.module = pkgProps.main = pkgProps.browser = pkgProps.unpkg = pkgProps.types = '';
+		(pkgProps.exports = null), (pkgProps.files = pkgProps.sideEffects = []), (pkgProps.typesVersions = {});
 	}
 
 	/**
-	 * Updates `package.json` properties impacting builds.
+	 * Pre-updates `package.json` properties impacting build process.
 	 */
-	const preBuildPkg = { ...origPkg, type: pkg.type, sideEffects: pkg.sideEffects };
-	await fsp.writeFile(pkgFile, prettier.format(JSON.stringify(preBuildPkg, null, 4), pkgPrettierCfg));
+	await u.updatePkg({ type: pkgProps.type, sideEffects: pkgProps.sideEffects });
 
 	/**
 	 * Configures plugins for Vite.
@@ -233,9 +230,14 @@ export default async ({ mode, command /*, ssrBuild */ }) => {
 			name: 'vite-plugin-c10n-post-process',
 			enforce: 'post', // After others on this hook.
 
-			async writeBundle(/* rollup hook */) {
+			async closeBundle(/* rollup hook */) {
 				if (postProcessed) return;
 				postProcessed = true;
+
+				/**
+				 * Updates `package.json` build-related properties.
+				 */
+				await u.updatePkg(pkgProps); // Also sorts and runs prettier.
 
 				/**
 				 * Copies `./.env.vault` to dist directory.
@@ -245,15 +247,10 @@ export default async ({ mode, command /*, ssrBuild */ }) => {
 				}
 
 				/**
-				 * Writes prepared `package.json` property updates.
-				 */
-				await fsp.writeFile(pkgFile, prettier.format(JSON.stringify(pkg, null, 4), pkgPrettierCfg));
-
-				/**
 				 * Generates typescript type declaration file(s).
 				 */
 				if ('build' === command) {
-					await spawn('npx', ['tsc', '--emitDeclarationOnly'], { cwd: projDir });
+					await u.spawn('npx', ['tsc', '--emitDeclarationOnly']);
 				}
 
 				/**
@@ -283,8 +280,8 @@ export default async ({ mode, command /*, ssrBuild */ }) => {
 			: mpaIndexes,
 
 		external: [
-			'__STATIC_CONTENT_MANIFEST', // CF workers.
 			...Object.keys(pkg.peerDependencies || {}),
+			'__STATIC_CONTENT_MANIFEST', // Cloudflare workers.
 		],
 		output: {
 			interop: 'auto', // Matches TypeScript.
@@ -304,7 +301,7 @@ export default async ({ mode, command /*, ssrBuild */ }) => {
 	 * @see https://vitejs.dev/config/
 	 */
 	const baseConfig = {
-		c10n: { pkg },
+		c10n: { pkg, pkgProps },
 		define: {
 			// Static replacements.
 			$$__APP_PKG_NAME__$$: pkg.name || '',
@@ -329,6 +326,14 @@ export default async ({ mode, command /*, ssrBuild */ }) => {
 		esbuild: { jsx: 'automatic' }, // ← Not necessary in Vite 4.0.x.
 		// See: <https://o5p.me/240y9w>, where `jsx` will be picked up from `tsconfig.json`.
 
+		...(isSSR // <https://vitejs.dev/config/ssr-options.html>.
+			? {
+					ssr: {
+						noExternal: isSSRNoExternals,
+						target: isSSRWorker ? 'webworker' : 'node',
+					},
+			  }
+			: {}),
 		worker: /* <https://vitejs.dev/guide/features.html#web-workers> */ {
 			format: 'es',
 			plugins: importedWorkerPlugins,
@@ -360,14 +365,6 @@ export default async ({ mode, command /*, ssrBuild */ }) => {
 				: {}),
 			rollupOptions: rollupConfig, // See: <https://o5p.me/5Vupql>.
 		},
-		...(isSSR // <https://vitejs.dev/config/ssr-options.html>.
-			? {
-					ssr: {
-						noExternal: true, // All server side.
-						target: isSSRWorker ? 'webworker' : 'node',
-					},
-			  }
-			: {}),
 	};
 
 	/**

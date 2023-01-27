@@ -1,5 +1,5 @@
 /**
- * Library.
+ * GitHub.
  */
 
 export {};
