@@ -2,14 +2,11 @@
 # GitHub workflow.
 ##
 
-name: "CI Deployment" # <https://o5p.me/QsaIUU>
-run-name: "CI Deployment by @${{github.actor}}"
+name: 'CI Deployment' # <https://o5p.me/QsaIUU>
+run-name: 'CI Deployment by @${{github.actor}}'
 
 on:
   pull_request:
-    branches:
-      - main
-  push:
     branches:
       - main
   workflow_dispatch:
@@ -64,4 +61,4 @@ jobs:
         if: steps.check.outputs.dev_files == 'true'
         shell: bash # Explicitly.
         run: |
-          npx @clevercanyon/madrun install:project --mode=ci;
+          npx @clevercanyon/madrun install project --mode=ci;
