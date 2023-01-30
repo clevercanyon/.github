@@ -6,7 +6,7 @@
 	"version": "1.0.6",
 	"license": "GPL-3.0-or-later",
 	"name": "@clevercanyon/github",
-	"description": "GitHub configuration.",
+	"description": "GitHub configuration for Clever Canyon.",
 	"repository": "https://github.com/clevercanyon/.github",
 	"homepage": "https://github.com/clevercanyon/.github#readme",
 	"bugs": "https://github.com/clevercanyon/.github/issues",

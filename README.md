@@ -1,3 +1,3 @@
 # @clevercanyon/github
 
-GitHub configuration.
+GitHub configuration for Clever Canyon.
