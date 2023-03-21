@@ -30,15 +30,15 @@
 	"types": "",
 	"typesVersions": {},
 	"dependencies": {
-		"@clevercanyon/utilities": "^1.0.112",
-		"@clevercanyon/utilities.node": "^1.0.65"
+		"@clevercanyon/utilities": "^1.0.115",
+		"@clevercanyon/utilities.node": "^1.0.66"
 	},
 	"peerDependencies": {},
 	"peerDependenciesMeta": {},
 	"optionalDependencies": {},
 	"bundleDependencies": [],
 	"devDependencies": {
-		"@clevercanyon/skeleton-dev-deps": "^1.0.135"
+		"@clevercanyon/skeleton-dev-deps": "^1.0.138"
 	},
 	"overrides": {},
 	"cpu": ["x64", "arm64"],
