@@ -1,5 +1,5 @@
 /**
- * GitHub.
+ * NoOp.
  */
 
 export {};

@@ -29,16 +29,18 @@
 	"unpkg": "",
 	"types": "",
 	"typesVersions": {},
-	"dependencies": {},
+	"dependencies": {
+		"@clevercanyon/utilities": "^1.0.112",
+		"@clevercanyon/utilities.node": "^1.0.65"
+	},
 	"peerDependencies": {},
 	"peerDependenciesMeta": {},
 	"optionalDependencies": {},
 	"bundleDependencies": [],
 	"devDependencies": {
-		"@clevercanyon/skeleton-dev-deps": "^1.0.121"
+		"@clevercanyon/skeleton-dev-deps": "^1.0.135"
 	},
 	"overrides": {},
-	"workspaces": [],
 	"cpu": ["x64", "arm64"],
 	"os": ["darwin", "linux"],
 	"engines": {
@@ -61,7 +63,7 @@
 						"architects": "push"
 					},
 					"labels": {},
-					"configVersion": "1.0.2",
+					"configVersion": "1.0.3",
 					"envsVersion": ""
 				},
 				"npmjs": {
