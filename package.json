@@ -30,15 +30,14 @@
 	"types": "",
 	"typesVersions": {},
 	"dependencies": {
-		"@clevercanyon/utilities": "^1.0.124",
-		"@clevercanyon/utilities.node": "^1.0.71"
+		"@clevercanyon/utilities": "^1.0.131"
 	},
 	"peerDependencies": {},
 	"peerDependenciesMeta": {},
 	"optionalDependencies": {},
 	"bundleDependencies": [],
 	"devDependencies": {
-		"@clevercanyon/skeleton-dev-deps": "^1.0.144"
+		"@clevercanyon/skeleton-dev-deps": "^1.0.157"
 	},
 	"overrides": {},
 	"cpu": ["x64", "arm64"],
@@ -55,7 +54,13 @@
 				},
 				"build": {
 					"appType": "",
-					"targetEnv": ""
+					"targetEnv": "",
+					"entryFiles": []
+				},
+				"ssrBuild": {
+					"appType": "",
+					"targetEnv": "",
+					"entryFiles": []
 				},
 				"github": {
 					"teams": {
