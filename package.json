@@ -30,14 +30,14 @@
 	"types": "",
 	"typesVersions": {},
 	"dependencies": {
-		"@clevercanyon/utilities": "^1.0.199"
+		"@clevercanyon/utilities": "^1.0.200"
 	},
 	"peerDependencies": {},
 	"peerDependenciesMeta": {},
 	"optionalDependencies": {},
 	"bundleDependencies": [],
 	"devDependencies": {
-		"@clevercanyon/dev-deps": "^1.0.167"
+		"@clevercanyon/dev-deps": "^1.0.169"
 	},
 	"overrides": {},
 	"cpu": ["x64", "arm64"],
