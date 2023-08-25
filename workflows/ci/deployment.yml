@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node-version: [19.2.0, 19.4.0]
+        node-version: [19.1.0, 20.5.1]
 
     runs-on: ${{matrix.os}}
     environment: ci # Repo CI env.
