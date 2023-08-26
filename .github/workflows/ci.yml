@@ -1,14 +1,23 @@
 ##
-# GitHub workflow.
+# GitHub CI workflow.
+#
+# GitHub is aware of this config file's location.
+#
+# @note CUSTOM EDITS ONLY PLEASE!
+# @note In the future this file will be updated automatically.
+# @note Only `<custom:start.../custom:end>` will be preserved below.
 ##
 
-name: 'CI Deployment' # <https://o5p.me/QsaIUU>
-run-name: 'CI Deployment by @${{github.actor}}'
+name: 'CI' # <https://o5p.me/QsaIUU>
+run-name: 'CI by @${{github.actor}}'
 
 on:
+  push:
+    branches:
+      - 'main'
   pull_request:
     branches:
-      - main
+      - 'main'
   workflow_dispatch:
 
 concurrency:
@@ -23,42 +32,44 @@ jobs:
         node-version: [19.1.0, 20.5.1]
 
     runs-on: ${{matrix.os}}
-    environment: ci # Repo CI env.
+    environment: ci # CI environment.
 
     permissions: # GitHub token permissions.
-      contents: read
+      contents: read # Mininum requirements.
 
-    env: # Supplied by action w/ permissions above.
+    env: # Supplied by permissions above.
       USER_GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
       # Supplied by org-wide action secrets.
       USER_NPM_TOKEN: ${{secrets.USER_NPM_TOKEN}}
 
       # Supplied by repo environment secrets.
-      USER_DOTENV_KEY_MAIN: ${{secrets.USER_DOTENV_KEY_MAIN}}
-      USER_DOTENV_KEY_CI: ${{secrets.USER_DOTENV_KEY_CI}}
+      USER_DOTENV_KEY_MAIN: ${{secrets.USER_DOTENV_KEY_MAIN || ''}}
+      USER_DOTENV_KEY_CI: ${{secrets.USER_DOTENV_KEY_CI || ''}}
 
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
 
-      - name: Check Repo Contents
-        shell: bash # Explicitly.
-        run: |
-          if [[ -d ./dev/.files ]]; then
-              echo 'dev_files=true' >> $GITHUB_OUTPUT
-          fi;
-        id: check # For conditionals below.
-
       - name: Setup Node v${{matrix.node-version}}
-        if: steps.check.outputs.dev_files == 'true'
         uses: actions/setup-node@v3
         with:
           node-version: ${{matrix.node-version}}
           cache: npm # Cache NPM dependencies.
 
       - name: Install Project
-        if: steps.check.outputs.dev_files == 'true'
-        shell: bash # Explicitly.
+        shell: bash
         run: |
           npx @clevercanyon/madrun install project --mode=ci;
+
+      - name: Run Project Tests
+        shell: bash
+        run: |
+          npx @clevercanyon/madrun tests --mode=ci;
+
+#
+##
+# Customizations
+# <custom:start>
+
+# </custom:end>
