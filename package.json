@@ -22,14 +22,14 @@
     "imports": {},
     "exports": {
         ".": {
+            "types": "./dist/types/index.d.ts",
             "import": "./dist/index.js",
-            "require": "./dist/index.cjs",
-            "types": "./dist/types/index.d.ts"
+            "default": "./dist/index.js"
         }
     },
     "sideEffects": ["./src/resources/init-env.ts", "./src/index.ts"],
     "module": "./dist/index.js",
-    "main": "./dist/index.cjs",
+    "main": "./dist/index.js",
     "browser": "",
     "unpkg": "./dist/index.js",
     "types": "./dist/types/index.d.ts",
@@ -39,14 +39,14 @@
         }
     },
     "dependencies": {
-        "@clevercanyon/utilities": "^1.0.265"
+        "@clevercanyon/utilities": "^1.0.266"
     },
     "peerDependencies": {},
     "peerDependenciesMeta": {},
     "optionalDependencies": {},
     "bundleDependencies": [],
     "devDependencies": {
-        "@clevercanyon/dev-deps": "^1.0.229"
+        "@clevercanyon/dev-deps": "^1.0.230"
     },
     "overrides": {},
     "cpu": ["x64", "arm64"],
