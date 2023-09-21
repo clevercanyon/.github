@@ -7,7 +7,7 @@
  * @note This entire file will be updated automatically.
  * @note Instead of editing here, please review `./settings.mjs`.
  *
- * Last generated using `./settings.mjs` Thu, Sep 21, 2023, 3:38:36 AM EDT.
+ * Last generated using `./settings.mjs` Thu, Sep 21, 2023, 4:13:34 AM EDT.
  */
 {
     "editor.autoIndent": "full",
