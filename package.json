@@ -1,89 +1,89 @@
 {
-	"private": true,
-	"publishConfig": {
-		"access": "restricted"
-	},
-	"version": "1.0.6",
-	"license": "GPL-3.0-or-later",
-	"name": "@clevercanyon/github",
-	"description": "GitHub configuration for Clever Canyon.",
-	"repository": "https://github.com/clevercanyon/.github",
-	"homepage": "https://github.com/clevercanyon/.github#readme",
-	"bugs": "https://github.com/clevercanyon/.github/issues",
-	"funding": "https://github.com/sponsors/clevercanyon",
-	"keywords": ["clevercanyon"],
-	"author": {
-		"name": "Clever Canyon",
-		"url": "https://clevercanyon.com"
-	},
-	"contributors": [],
-	"type": "module",
-	"bin": {},
-	"imports": {},
-	"exports": {
-		".": {
-			"import": "./dist/index.js",
-			"require": "./dist/index.cjs",
-			"types": "./dist/types/index.d.ts"
-		}
-	},
-	"sideEffects": ["./src/resources/init-env.ts", "./src/index.ts"],
-	"module": "./dist/index.js",
-	"main": "./dist/index.cjs",
-	"browser": "",
-	"unpkg": "./dist/index.js",
-	"types": "./dist/types/index.d.ts",
-	"typesVersions": {
-		">=3.1": {
-			"./*": ["./dist/types/*"]
-		}
-	},
-	"dependencies": {
-		"@clevercanyon/utilities": "^1.0.236"
-	},
-	"peerDependencies": {},
-	"peerDependenciesMeta": {},
-	"optionalDependencies": {},
-	"bundleDependencies": [],
-	"devDependencies": {
-		"@clevercanyon/dev-deps": "^1.0.215"
-	},
-	"overrides": {},
-	"cpu": ["x64", "arm64"],
-	"os": ["darwin", "linux"],
-	"engines": {
-		"node": "^19.1.0 || ^20.5.1",
-		"npm": "^8.19.3 || ^9.2.0"
-	},
-	"config": {
-		"c10n": {
-			"&": {
-				"dotfiles": {
-					"lock": []
-				},
-				"build": {
-					"appType": "cma",
-					"targetEnv": "node",
-					"entryFiles": []
-				},
-				"ssrBuild": {
-					"appType": "",
-					"targetEnv": "",
-					"entryFiles": []
-				},
-				"github": {
-					"teams": {
-						"engineers": "pull",
-						"architects": "push"
-					},
-					"labels": {},
-					"configVersion": "1.0.9",
-					"envsVersion": ""
-				},
-				"npmjs": {
-					"configVersions": ""
-				}
-			}
-		}
-	}
+    "private": true,
+    "publishConfig": {
+        "access": "restricted"
+    },
+    "version": "1.0.6",
+    "license": "GPL-3.0-or-later",
+    "name": "@clevercanyon/github",
+    "description": "GitHub configuration for Clever Canyon.",
+    "repository": "https://github.com/clevercanyon/.github",
+    "homepage": "https://github.com/clevercanyon/.github#readme",
+    "bugs": "https://github.com/clevercanyon/.github/issues",
+    "funding": "https://github.com/sponsors/clevercanyon",
+    "keywords": ["clevercanyon"],
+    "author": {
+        "name": "Clever Canyon",
+        "url": "https://clevercanyon.com"
+    },
+    "contributors": [],
+    "type": "module",
+    "bin": {},
+    "imports": {},
+    "exports": {
+        ".": {
+            "import": "./dist/index.js",
+            "require": "./dist/index.cjs",
+            "types": "./dist/types/index.d.ts"
+        }
+    },
+    "sideEffects": ["./src/resources/init-env.ts", "./src/index.ts"],
+    "module": "./dist/index.js",
+    "main": "./dist/index.cjs",
+    "browser": "",
+    "unpkg": "./dist/index.js",
+    "types": "./dist/types/index.d.ts",
+    "typesVersions": {
+        ">=3.1": {
+            "./*": ["./dist/types/*"]
+        }
+    },
+    "dependencies": {
+        "@clevercanyon/utilities": "^1.0.262"
+    },
+    "peerDependencies": {},
+    "peerDependenciesMeta": {},
+    "optionalDependencies": {},
+    "bundleDependencies": [],
+    "devDependencies": {
+        "@clevercanyon/dev-deps": "^1.0.227"
+    },
+    "overrides": {},
+    "cpu": ["x64", "arm64"],
+    "os": ["darwin", "linux"],
+    "engines": {
+        "node": "^19.1.0 || ^20.5.1",
+        "npm": "^8.19.3 || ^9.2.0"
+    },
+    "config": {
+        "c10n": {
+            "&": {
+                "dotfiles": {
+                    "lock": []
+                },
+                "build": {
+                    "appType": "cma",
+                    "targetEnv": "node",
+                    "entryFiles": []
+                },
+                "ssrBuild": {
+                    "appType": "",
+                    "targetEnv": "",
+                    "entryFiles": []
+                },
+                "github": {
+                    "teams": {
+                        "engineers": "pull",
+                        "architects": "push"
+                    },
+                    "labels": {},
+                    "configVersion": "1.0.9",
+                    "envsVersion": ""
+                },
+                "npmjs": {
+                    "configVersions": ""
+                }
+            }
+        }
+    }
 }
