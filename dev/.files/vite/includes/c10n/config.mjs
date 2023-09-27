@@ -14,10 +14,10 @@ import path from 'node:path';
 import * as preact from 'preact';
 import { $http as $cfpꓺhttp } from '../../../../../node_modules/@clevercanyon/utilities.cfp/dist/index.js';
 import { $chalk, $fs, $glob } from '../../../../../node_modules/@clevercanyon/utilities.node/dist/index.js';
-import { $obp, $str } from '../../../../../node_modules/@clevercanyon/utilities/dist/index.js';
-import { renderToString as $preactꓺapisꓺssrꓺrenderToString } from '../../../../../node_modules/@clevercanyon/utilities/dist/preact/apis/ssr.js';
-import { StandAlone as $preactꓺcomponentsꓺ404ꓺStandAlone } from '../../../../../node_modules/@clevercanyon/utilities/dist/preact/routes/404.js';
+import { $obp, $preact, $str } from '../../../../../node_modules/@clevercanyon/utilities/dist/index.js';
+import { StandAlone as $preactꓺcomponentsꓺError404ꓺStandAlone } from '../../../../../node_modules/@clevercanyon/utilities/dist/preact/routes/error-404.js';
 import exclusions from '../../../bin/includes/exclusions.mjs';
+import extensions from '../../../bin/includes/extensions.mjs';
 import u from '../../../bin/includes/utilities.mjs';
 
 /**
@@ -114,12 +114,16 @@ export default async ({ mode, command, isSSRBuild, projDir, distDir, pkg, env, a
 
             /**
              * Deletes a few things that are not needed by apps running on Cloudflare Pages.
+             *
+             * We only prune when building for production, as it’s possible there are files being compiled by TypeScript
+             * that are needed for development; i.e., they need to exist in dev mode in order to be capable of serving
+             * their intended purpose; e.g., dev-only utilities, runners, sandbox files, etc.
              */
-            if ('build' === command && ['spa', 'mpa'].includes(appType) && ['cfp'].includes(targetEnv)) {
+            if ('build' === command && 'prod' === mode && ['spa', 'mpa'].includes(appType) && ['cfp'].includes(targetEnv)) {
                 for (const fileOrDir of await $glob.promise(
                     [
                         'types', // Prunes TypeScript type declarations.
-                        'index.*', // Prunes unused `index.*` files, in favor of SSR routes.
+                        'index.' + extensions.asBracedGlob([...extensions.byCanonical.html]),
                     ],
                     { cwd: distDir, onlyFiles: false },
                 )) {
@@ -157,7 +161,7 @@ export default async ({ mode, command, isSSRBuild, projDir, distDir, pkg, env, a
                         fileContents = fileContents.replace('$$__APP_CFP_DEFAULT_HEADERS__$$', cfpDefaultHeaders);
                     }
                     if (['404.html'].includes(fileRelPath)) {
-                        const cfpDefault404 = '<!DOCTYPE html>' + $preactꓺapisꓺssrꓺrenderToString(preact.h($preactꓺcomponentsꓺ404ꓺStandAlone));
+                        const cfpDefault404 = '<!DOCTYPE html>' + $preact.ssr.renderToString(preact.h($preactꓺcomponentsꓺError404ꓺStandAlone));
                         fileContents = fileContents.replace('$$__APP_CFP_DEFAULT_404_HTML__$$', cfpDefault404);
                     }
                     if (['_headers', '_redirects', 'robots.txt'].includes(fileRelPath)) {
