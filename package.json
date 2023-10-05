@@ -27,7 +27,7 @@
             "default": "./dist/index.js"
         }
     },
-    "sideEffects": ["**/*.{css,scss,less}", "./src/resources/init-env.ts"],
+    "sideEffects": ["**/*.{css,scss,less}", "./src/resources/init.ts"],
     "module": "./dist/index.js",
     "main": "./dist/index.js",
     "browser": "",
@@ -39,14 +39,14 @@
         }
     },
     "dependencies": {
-        "@clevercanyon/utilities": "^1.0.295"
+        "@clevercanyon/utilities": "^1.0.322"
     },
     "peerDependencies": {},
     "peerDependenciesMeta": {},
     "optionalDependencies": {},
     "bundleDependencies": [],
     "devDependencies": {
-        "@clevercanyon/dev-deps": "^1.0.243"
+        "@clevercanyon/dev-deps": "^1.0.246"
     },
     "overrides": {},
     "cpu": ["x64", "arm64"],
