@@ -19,7 +19,11 @@
     "contributors": [],
     "type": "module",
     "bin": {},
-    "imports": {},
+    "imports": {
+        "#^*": "./*",
+        "#@*": "./src/resources/*",
+        "#*": "./src/*"
+    },
     "exports": {
         ".": {
             "types": "./dist/types/index.d.ts",
@@ -39,16 +43,14 @@
         }
     },
     "dependencies": {
-        "@clevercanyon/utilities": "^1.0.440",
-        "react": "npm:@preact/compat@^17.1.2",
-        "react-dom": "npm:@preact/compat@^17.1.2"
+        "@clevercanyon/utilities": "^1.0.494"
     },
     "peerDependencies": {},
     "peerDependenciesMeta": {},
     "optionalDependencies": {},
     "bundleDependencies": [],
     "devDependencies": {
-        "@clevercanyon/dev-deps": "^1.0.263"
+        "@clevercanyon/dev-deps": "^1.0.281"
     },
     "overrides": {},
     "cpu": ["x64", "arm64"],
