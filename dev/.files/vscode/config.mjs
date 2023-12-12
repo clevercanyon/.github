@@ -59,12 +59,19 @@ export default async () => {
         ['**/.env.*']: 'properties', // Suffix, not extension.
         ['**/CODEOWNERS']: 'ignore', // File has no extension.
 
-        ['**/tsconfig.' + fileAssociationsOverrideExt('json')]: 'jsonc', // JSON w/comments.
-        ['**/.vscode/*.' + fileAssociationsOverrideExt('json')]: 'jsonc', // JSON w/comments.
+        ['**/tsconfig.' + fileAssociationsOverrideExt('json')]: 'jsonc',
+        ['**/.vscode/*.' + fileAssociationsOverrideExt('json')]: 'jsonc',
 
+        ['**/src/cargo/.well-known/**/*.' + fileAssociationsOverrideExt('json')]: 'jsonc',
+
+        ['**/dist/_headers']: 'plaintext', // File has no extension.
         ['**/src/cargo/_headers']: 'plaintext', // File has no extension.
+
+        ['**/dist/_redirects']: 'plaintext', // File has no extension.
         ['**/src/cargo/_redirects']: 'plaintext', // File has no extension.
-        ['**/src/cargo/_routes.' + fileAssociationsOverrideExt('json')]: 'jsonc', // JSON w/comments.
+
+        ['**/src/cargo/manifest.' + fileAssociationsOverrideExt('json')]: 'jsonc',
+        ['**/src/cargo/_routes.' + fileAssociationsOverrideExt('json')]: 'jsonc',
     };
 
     /**
@@ -292,6 +299,23 @@ export default async () => {
         'eslint.experimental.useFlatConfig': true,
         'eslint.workingDirectories': [{ 'mode': 'auto' }],
 
+        'eslint.probe': [
+            // For now, disabling eslint for markdown.
+
+            // MDX eslint plugin not compatible with MDX v3 yet.
+            // Outdated package: `eslint-plugin-mdx`.
+
+            // Additionally, the formatter for MDX/markdown has been changed
+            // from eslint to prettier, for now. See langauge settings below.
+
+            // 'mdx',
+            // 'markdown',
+
+            'javascript',
+            'javascriptreact',
+            'typescript',
+            'typescriptreact',
+        ],
         'eslint.validate': [
             // For now, disabling eslint for markdown.
 
@@ -352,7 +376,7 @@ export default async () => {
         'markdown.preview.fontSize': 16,
         'markdown.preview.lineHeight': 1.5,
         'markdown.preview.typographer': true,
-        'markdown.preview.fontFamily': 'Georama, ui-sans-serif, sans-serif',
+        'markdown.preview.fontFamily': "Georama, sans-serif, 'Apple Color Emoji'",
 
         'markdown.validate.enabled': false, // For a different markdown flavor.
         // Disabling because we use remark, a different flavor than VSCode, and several plugins.
@@ -384,7 +408,7 @@ export default async () => {
             'editor.wordWrap': 'on',
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             // Change this back to `dbaeumer.vscode-eslint` when `eslint-plugin-mdx` is compatible with MDX v3.
             'editor.defaultFormatter': 'esbenp.prettier-vscode',
@@ -396,7 +420,7 @@ export default async () => {
             'editor.wordWrap': 'on',
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             // Change this back to `dbaeumer.vscode-eslint` when `eslint-plugin-mdx` is compatible with MDX v3.
             'editor.defaultFormatter': 'esbenp.prettier-vscode',
@@ -406,7 +430,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'esbenp.prettier-vscode',
         },
@@ -420,7 +444,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'esbenp.prettier-vscode',
         },
@@ -429,7 +453,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'esbenp.prettier-vscode',
         },
@@ -438,7 +462,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'ms-python.black-formatter',
         },
@@ -447,7 +471,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'esbenp.prettier-vscode',
         },
@@ -456,7 +480,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'esbenp.prettier-vscode',
         },
@@ -470,7 +494,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'dbaeumer.vscode-eslint',
         },
@@ -479,7 +503,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'dbaeumer.vscode-eslint',
         },
@@ -488,7 +512,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'dbaeumer.vscode-eslint',
         },
@@ -497,7 +521,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'dbaeumer.vscode-eslint',
         },
@@ -506,7 +530,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'esbenp.prettier-vscode',
         },
@@ -515,7 +539,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'esbenp.prettier-vscode',
         },
@@ -524,7 +548,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'esbenp.prettier-vscode',
         },
@@ -538,7 +562,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'esbenp.prettier-vscode',
         },
@@ -547,7 +571,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'esbenp.prettier-vscode',
         },
@@ -556,7 +580,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'esbenp.prettier-vscode',
         },
@@ -565,7 +589,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'tamasfe.even-better-toml',
         },
@@ -574,7 +598,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'esbenp.prettier-vscode',
         },
@@ -583,7 +607,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'esbenp.prettier-vscode',
         },
@@ -592,7 +616,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'esbenp.prettier-vscode',
         },
@@ -601,7 +625,7 @@ export default async () => {
             'editor.insertSpaces': !prettierConfig.useTabs,
 
             'editor.codeActionsOnSave': {
-                'source.fixAll': true,
+                'source.fixAll': 'explicit',
             },
             'editor.defaultFormatter': 'esbenp.prettier-vscode',
         },

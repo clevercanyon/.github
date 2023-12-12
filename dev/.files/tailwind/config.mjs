@@ -36,7 +36,7 @@ const projDir = path.resolve(__dirname, '../../..');
  * Defines Tailwind configuration.
  *
  * Jiti, which is used by Tailwind to load ESM config files, doesn’t support top-level await. Thus, we cannot use async
- * functionality here. Consider `make-synchronous` (already in dev-deps) if necessary. {@see https://o5p.me/1odhxy}.
+ * functionality here. Consider using a CLI request to acquire resources, if necessary. {@see https://o5p.me/1odhxy}.
  */
 export default /* not async compatible */ ({ themesConfig } = {}) => {
     /**
@@ -90,6 +90,11 @@ export default /* not async compatible */ ({ themesConfig } = {}) => {
                     '1.5em': '1.5em',
                     '2em': '2em',
                 },
+                lineHeight: {
+                    '1em': '1em',
+                    '1.5em': '1.5em',
+                    '2em': '2em',
+                },
                 aspectRatio: {
                     'image': '40 / 21', // e.g., 1200 x 630 for OG image.
                 },
@@ -125,6 +130,10 @@ export default /* not async compatible */ ({ themesConfig } = {}) => {
                     '2/3': '66.667%',
                 },
                 fontSize: {
+                    '.5em': ['.5em', '.5em'],
+                    '.75em': ['.75em', '.75em'],
+                    '1em': ['1em', '1em'],
+
                     // Neither of these are allowed to autoscale.
                     // We don’t autoscale text that is small already.
                     xs: ['.75rem', { lineHeight: '1rem' }], // Equivalent to 12px/16px.
@@ -148,6 +157,9 @@ export default /* not async compatible */ ({ themesConfig } = {}) => {
                     // All of these are allowed to autoscale down to four sizes smaller than ideal target size.
                     '8xl': ['clamp(2.25rem, 6.667vw, 6rem)', { lineHeight: 'clamp(2.5rem, 7.986vw, 7.188rem)' }], // Equivalent to 96px/115px.
                     '9xl': ['clamp(3rem, 8.889vw, 8rem)', { lineHeight: 'clamp(3.625rem, 10.625vw, 9.563rem)' }], // Equivalent to 128px/153px.
+                },
+                boxShadow: {
+                    'inner-sm': 'inset 0 1px 2px 0 rgb(0 0 0 / 0.05)',
                 },
                 /**
                  * Prose styles.
@@ -321,7 +333,7 @@ export default /* not async compatible */ ({ themesConfig } = {}) => {
                                 verticalAlign: 'middle',
 
                                 background: 'rgb(var(--colors-color-neutral), .25)',
-                                border: '1px solid rgb(var(--colors-color-neutral-bdr))',
+                                border: '1px solid rgb(var(--colors-color-neutral-line))',
                                 borderRadius: '.15em',
                             },
                             '.task-list-item > input:checked::before': {
@@ -362,6 +374,10 @@ export default /* not async compatible */ ({ themesConfig } = {}) => {
                         from: { opacity: 0 },
                         to: { opacity: 1 },
                     },
+                    'subtle-fade-in': {
+                        from: { opacity: 0.25 },
+                        to: { opacity: 1 },
+                    },
                     'fade-out': {
                         from: { opacity: 1 },
                         to: { opacity: 0 },
@@ -370,6 +386,7 @@ export default /* not async compatible */ ({ themesConfig } = {}) => {
                 animation: {
                     'fade-in': 'fade-in 150ms linear',
                     'fade-out': 'fade-out 150ms linear',
+                    'subtle-fade-in': 'subtle-fade-in 150ms linear',
                 },
             },
         },

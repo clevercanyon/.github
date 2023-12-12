@@ -7,7 +7,7 @@
  * @note This entire file will be updated automatically.
  * @note Instead of editing here, please review `./tsconfig.mjs`.
  *
- * Last generated using `./tsconfig.mjs` Dec 3, 2023 10:58 AM UTC.
+ * Last generated using `./tsconfig.mjs` Dec 12, 2023 2:07 AM UTC.
  */
 {
     "include": ["./src/**/*", "./dev-types.d.ts"],
@@ -78,6 +78,7 @@
         "**/Network Trash Folder/**",
         "**/Temporary Items/**",
         "**/.*/**",
+        "!**/.well-known/**",
         "**/*.config.*/**",
         "**/wrangler.*/**",
         "**/tsconfig.*/**",
