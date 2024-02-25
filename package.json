@@ -43,21 +43,21 @@
         }
     },
     "dependencies": {
-        "@clevercanyon/utilities": "^1.0.854"
+        "@clevercanyon/utilities": "^1.0.862"
     },
     "peerDependencies": {},
     "peerDependenciesMeta": {},
     "optionalDependencies": {},
     "bundleDependencies": [],
     "devDependencies": {
-        "@clevercanyon/dev-deps": "^1.0.359"
+        "@clevercanyon/dev-deps": "^1.0.361"
     },
     "overrides": {},
     "cpu": ["x64", "arm64"],
     "os": ["darwin", "linux"],
     "engines": {
-        "node": "^20.5.0 || ^20.9.0",
-        "npm": "^9.8.0 || ^10.1.0"
+        "node": "^20.5.0 || ^20.9.0 || ^21.6.2",
+        "npm": "^9.8.0 || ^10.1.0 || ^10.2.4"
     },
     "config": {
         "c10n": {
