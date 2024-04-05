@@ -17,14 +17,14 @@
 # Generated data.
 # <generated:start>
 
-# Last generated Mar 22, 2024 8:39 PM UTC.
+# Last generated Apr 5, 2024 10:36 PM UTC.
 
 [production]
 node >= 20.9.0
 and_chr >= 92
 chrome >= 92
 and_ff >= 90
-android >= 122
+android >= 123
 edge >= 92
 samsung >= 16.0
 safari >= 15.4
@@ -48,7 +48,7 @@ node >= 20.9.0
 and_chr >= 92
 chrome >= 92
 and_ff >= 90
-android >= 122
+android >= 123
 edge >= 92
 samsung >= 16.0
 safari >= 15.4
@@ -72,7 +72,7 @@ node >= 20.9.0
 and_chr >= 92
 chrome >= 92
 and_ff >= 90
-android >= 122
+android >= 123
 edge >= 92
 samsung >= 16.0
 safari >= 15.4
@@ -107,7 +107,7 @@ not dead
 and_chr >= 92
 chrome >= 92
 and_ff >= 90
-android >= 122
+android >= 123
 edge >= 92
 samsung >= 16.0
 safari >= 15.4
@@ -130,7 +130,7 @@ not dead
 and_chr >= 92
 chrome >= 92
 and_ff >= 90
-android >= 122
+android >= 123
 edge >= 92
 samsung >= 16.0
 safari >= 15.4
